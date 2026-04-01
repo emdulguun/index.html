@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URGENT: Your Computer Has a Virus 🚨</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Creepster&family=VT323&family=Press+Start+2P&display=swap');
+
+  :root {
+    --red: #ff0000;
+    --dark-red: #8b0000;
+    --yellow: #ffff00;
+    --bg: #000;
+    --blue-screen: #0000aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'VT323', monospace;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  /* PHASE 1: BSOD */
+  #bsod {
+    position: fixed; inset: 0;
+    background: var(--blue-screen);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 60px;
+    z-index: 100;
+    animation: bsodIn 0.05s steps(1) 0.5s both;
+  }
+
+  @keyframes bsodIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  #bsod h1 {
+    font-family: 'VT323', monospace;
+    font-size: clamp(24px, 4vw, 48px);
+    color: white;
+    background: white;
+    color: var(--blue-screen);
+    padding: 4px 16px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+  }
+
+  #bsod p {
+    font-family: 'VT323', monospace;
+    font-size: clamp(18px, 2.5vw, 28px);
+    color: white;
+    max-width: 700px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  #bsod .code {
+    font-size: clamp(14px, 2vw, 22px);
+    opacity: 0.8;
+    margin-top: 30px;
+  }
+
+  #progress-label {
+    margin-top: 40px;
+    font-size: clamp(18px, 2.5vw, 28px);
+    color: white;
+  }
+
+  #progress-bar-outer {
+    width: min(500px, 80vw);
+    height: 28px;
+    border: 3px solid white;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #progress-bar-inner {
+    height: 100%;
+    background: white;
+    width: 0%;
+    transition: width 0.15s linear;
+  }
+
+  /* PHASE 2: VIRUS ALERT */
+  #virus-screen {
+    position: fixed; inset: 0;
+    background: #000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    overflow: hidden;
+  }
+
+  .scanline {
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  .skull-container {
+    font-size: clamp(80px, 15vw, 160px);
+    animation: skullPulse 0.4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 30px #ff0000);
+    margin-bottom: 20px;
+  }
+
+  @keyframes skullPulse {
+    from { transform: scale(1); filter: drop-shadow(0 0 20px #ff0000); }
+    to   { transform: scale(1.08); filter: drop-shadow(0 0 60px #ff4400); }
+  }
+
+  .virus-title {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(36px, 7vw, 100px);
+    color: var(--red);
+    text-shadow: 0 0 20px #ff0000, 0 0 60px #ff0000;
+    animation: glitch 0.3s infinite;
+    letter-spacing: 4px;
+    text-align: center;
+  }
+
+  @keyframes glitch {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-3px, 1px); clip-path: inset(20% 0 30% 0); }
+    40%  { transform: translate(3px, -1px); clip-path: inset(60% 0 10% 0); }
+    60%  { transform: translate(-1px, 2px); }
+    80%  { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+
+  .virus-subtitle {
+    font-family: 'VT323', monospace;
+    font-size: clamp(20px, 3vw, 36px);
+    color: var(--yellow);
+    text-align: center;
+    margin: 10px 20px;
+    animation: flicker 1.5s step-start infinite;
+    max-width: 700px;
+  }
+
+  @keyframes flicker {
+    0%, 90%, 95%, 100% { opacity: 1; }
+    92%, 97%           { opacity: 0; }
+  }
+
+  .fake-counter {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(28px, 5vw, 60px);
+    color: #ff4444;
+    margin: 20px 0;
+    animation: countShake 0.1s infinite;
+    text-shadow: 2px 2px #8b0000;
+  }
+
+  @keyframes countShake {
+    0%, 100% { transform: translate(0); }
+    25%  { transform: translate(-2px, 1px); }
+    75%  { transform: translate(2px, -1px); }
+  }
+
+  .fake-btn {
+    margin-top: 30px;
+    padding: 16px 40px;
+    font-family: 'VT323', monospace;
+    font-size: clamp(24px, 3vw, 36px);
+    background: var(--red);
+    color: white;
+    border: 3px solid #ff6666;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.1s;
+    position: relative;
+    animation: btnPulse 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes btnPulse {
+    from { box-shadow: 0 0 10px #ff0000; }
+    to   { box-shadow: 0 0 40px #ff0000, 0 0 80px #ff0000; }
+  }
+
+  .fake-btn:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+  }
+
+  /* Floating warning popups */
+  .popup {
+    position: fixed;
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 0;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    z-index: 150;
+    min-width: 280px;
+    animation: popIn 0.1s steps(1) forwards;
+    box-shadow: 2px 2px 0 #000;
+    cursor: move;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0); }
+    to   { transform: scale(1); }
+  }
+
+  .popup-title {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 4px 8px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+
+  .popup-title span { font-weight: bold; letter-spacing: 1px; }
+
+  .popup-close {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #000 #000 #ffffff;
+    color: black;
+    width: 20px; height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace;
+  }
+
+  .popup-body {
+    padding: 12px 16px 16px;
+    color: #000;
+    line-height: 1.5;
+    font-size: 20px;
+  }
+
+  .popup-body button {
+    margin-top: 10px;
+    padding: 4px 20px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #000 #000 #ffffff;
+    cursor: pointer;
+  }
+
+  /* Floating red Xs everywhere */
+  .floaty {
+    position: fixed;
+    font-size: 28px;
+    color: red;
+    pointer-events: none;
+    animation: floatUp linear forwards;
+    z-index: 90;
+  }
+
+  @keyframes floatUp {
+    from { opacity: 1; transform: translateY(0) rotate(0deg); }
+    to   { opacity: 0; transform: translateY(-200px) rotate(360deg); }
+  }
+
+  /* PHASE 3: REVEAL */
+  #reveal {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+  }
+
+  .april-text {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(48px, 10vw, 140px);
+    background: linear-gradient(135deg, #f7971e, #ffd200, #f7971e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    filter: drop-shadow(0 0 30px rgba(255,210,0,0.5));
+  }
+
+  @keyframes bounceIn {
+    from { transform: scale(0) rotate(-10deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .fool-sub {
+    font-family: 'VT323', monospace;
+    font-size: clamp(24px, 4vw, 52px);
+    color: #fff;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease 0.4s forwards;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .emoji-row {
+    font-size: clamp(32px, 5vw, 64px);
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease 0.7s forwards;
+    letter-spacing: 8px;
+  }
+
+  .confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 400;
+  }
+
+  .cursor-skull {
+    position: fixed;
+    pointer-events: none;
+    font-size: 28px;
+    z-index: 999;
+    transform: translate(-8px, -8px);
+    transition: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor-skull" id="cursor">💀</div>
+<div class="scanline"></div>
+
+<!-- PHASE 1: Blue Screen -->
+<div id="bsod">
+  <h1>⚠ A problem has been detected ⚠</h1>
+  <p>Windows has been shut down to prevent damage to your computer.</p>
+  <p style="margin-top:10px;">A virus has been detected eating your files.</p>
+  <p class="code">VIRUS_DETECTED_EATING_YOUR_FILES (0x000000FE)</p>
+  <p class="code" style="margin-top:8px;">*** STOP: 0x0000007E (0xC0000005, 0xFF791A94, 0xFF791BD0)</p>
+  <div id="progress-label">Scanning system files... 0%</div>
+  <div id="progress-bar-outer"><div id="progress-bar-inner"></div></div>
+</div>
+
+<!-- PHASE 2: Virus Alert -->
+<div id="virus-screen">
+  <div class="skull-container">💀</div>
+  <div class="virus-title">VIRUS DETECTED</div>
+  <div class="virus-subtitle">⚠ WARNING: 1,337 CRITICAL VIRUSES FOUND ON YOUR COMPUTER ⚠</div>
+  <div class="virus-subtitle" style="color:#ff6666; font-size: clamp(16px,2.5vw,28px);">Your files are being deleted... Your webcam has been activated... Your cat photos are at risk...</div>
+  <div class="fake-counter" id="counter">1337</div>
+  <button class="fake-btn" onclick="triggerReveal()">CLICK HERE TO REMOVE VIRUS</button>
+</div>
+
+<canvas class="confetti" id="confetti"></canvas>
+
+<!-- PHASE 3: Reveal -->
+<div id="reveal">
+  <div class="april-text">APRIL FOOLS!</div>
+  <div class="fool-sub">Your computer is completely fine 😇<br>No viruses, no deleted files, no skull cursor... well, maybe the skull.</div>
+  <div class="emoji-row">🎉🤡🎊😂🤣</div>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+
+  // ---- PHASE 1: BSOD progress ----
+  const bar = document.getElementById('progress-bar-inner');
+  const label = document.getElementById('progress-label');
+  let pct = 0;
+  const messages = [
+    'Scanning system files',
+    'Detecting threats',
+    'Analyzing registry',
+    'Counting cat photos',
+    'OH NO'
+  ];
+
+  const bsodTimer = setInterval(() => {
+    pct += Math.random() * 4 + 1;
+    if (pct >= 100) { pct = 100; clearInterval(bsodTimer); startPhase2(); }
+    bar.style.width = pct + '%';
+    label.textContent = messages[Math.floor(pct / 22)] + '... ' + Math.floor(pct) + '%';
+  }, 80);
+
+  function startPhase2() {
+    setTimeout(() => {
+      document.getElementById('bsod').style.display = 'none';
+      const vs = document.getElementById('virus-screen');
+      vs.style.display = 'flex';
+      startCounter();
+      startPopups();
+      startFloatyXs();
+    }, 600);
+  }
+
+  // ---- Counter ----
+  let count = 1337;
+  function startCounter() {
+    setInterval(() => {
+      count += Math.floor(Math.random() * 13 + 1);
+      document.getElementById('counter').textContent = count.toLocaleString();
+    }, 150);
+  }
+
+  // ---- Floating Xs ----
+  const symbols = ['❌','☠️','⚠️','💀','🔴','‼️'];
+  function startFloatyXs() {
+    setInterval(() => {
+      const el = document.createElement('div');
+      el.className = 'floaty';
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top  = (60 + Math.random() * 40) + 'vh';
+      el.style.fontSize = (20 + Math.random() * 30) + 'px';
+      const dur = 1.5 + Math.random() * 2;
+      el.style.animationDuration = dur + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), dur * 1000);
+    }, 120);
+  }
+
+  // ---- Windows 98-style popups ----
+  const popupMessages = [
+    { title: '⚠ Security Alert', body: 'Your banking passwords have been<br>copied to 47 unknown servers.' },
+    { title: '💀 CRITICAL ERROR', body: '500 files deleted.<br>Deleting 500 more in 3 seconds...' },
+    { title: '🔴 Virus Found', body: 'ILOVEYOU.exe is sending emails<br>to your entire contact list.' },
+    { title: '⚠ WARNING', body: 'Your printer is on fire.<br>Please stand back.' },
+    { title: '💀 SYSTEM ERROR', body: 'Coffee machine disconnected.<br>Productivity at 0%.' },
+    { title: '🔴 Alert', body: 'Your browser history has been<br>uploaded to the cloud ☁️' },
+    { title: '⚠ Notice', body: 'Cat photos: CORRUPTED<br>Dog photos: Also corrupted.<br>All photos: Gone.' },
+  ];
+  let popupCount = 0;
+
+  function spawnPopup() {
+    if (document.getElementById('reveal').style.display === 'flex') return;
+    const msg = popupMessages[popupCount % popupMessages.length];
+    popupCount++;
+
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+    popup.style.left = (5 + Math.random() * 65) + 'vw';
+    popup.style.top  = (10 + Math.random() * 60) + 'vh';
+    popup.style.animationDelay = '0s';
+
+    popup.innerHTML = `
+      <div class="popup-title">
+        <span>${msg.title}</span>
+        <div class="popup-close" onclick="closePopup(this)">✕</div>
+      </div>
+      <div class="popup-body">
+        ${msg.body}
+        <br>
+        <button onclick="closePopup(this); spawnPopup(); spawnPopup();">OK</button>
+        <button onclick="closePopup(this); spawnPopup(); spawnPopup();">Cancel</button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Draggable
+    let dragging = false, ox, oy;
+    popup.querySelector('.popup-title').addEventListener('mousedown', e => {
+      dragging = true;
+      ox = e.clientX - popup.offsetLeft;
+      oy = e.clientY - popup.offsetTop;
+    });
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      popup.style.left = (e.clientX - ox) + 'px';
+      popup.style.top  = (e.clientY - oy) + 'px';
+    });
+    document.addEventListener('mouseup', () => dragging = false);
+
+    setTimeout(() => { if (popup.parentNode) popup.remove(); }, 6000);
+  }
+
+  function closePopup(el) {
+    el.closest('.popup').remove();
+  }
+
+  function startPopups() {
+    spawnPopup();
+    setInterval(() => {
+      if (document.getElementById('reveal').style.display !== 'flex') spawnPopup();
+    }, 1800);
+  }
+
+  // ---- PHASE 3: Reveal ----
+  function triggerReveal() {
+    document.getElementById('virus-screen').style.display = 'none';
+    document.querySelectorAll('.popup').forEach(p => p.remove());
+    const rev = document.getElementById('reveal');
+    rev.style.display = 'flex';
+    startConfetti();
+  }
+
+  // ---- Confetti ----
+  function startConfetti() {
+    const canvas = document.getElementById('confetti');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const pieces = Array.from({ length: 180 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      w: 8 + Math.random() * 12,
+      h: 6 + Math.random() * 8,
+      color: `hsl(${Math.random()*360},100%,60%)`,
+      vx: (Math.random() - 0.5) * 4,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 6
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        if (p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+</script>
+</body>
+</html>
